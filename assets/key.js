@@ -1,2 +1,0 @@
-Client ID fba1112eefbc49e691969ad1da96e401
-Client Secret d4ef6428ac8c4cb88716afb9f7c5bd73
