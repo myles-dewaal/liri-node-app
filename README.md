@@ -9,7 +9,13 @@ To look up a movie's information, simply type, node liri.js movie-this "movie ti
 
 To look up a song's information, simply type, node liri.js spotify-this "title of the song" and search. Below is an image of what takes place when you search this.
 
+![Spotify-this image](/Images/spotify-this.PNG)
+
 To look up a artist concert info, simply type, node liri.js concert.this "name of the band" and search. Below is an image of what takes place when you search this.
+
+![Concert-this image](/Images/concert-this.PNG)
 
 If you want to have the machine run a set command, simply type node liri.js do-what-i-say and search.
 Below is an image of what takes place when you search this.
+
+![Do What I say image](/Images/dowhatisay.PNG)
