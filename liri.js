@@ -3,10 +3,39 @@ var keys = require("./keys.js");
 var Spotify = require("node-spotify-api")
 var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
+var action = process.argv[2];
+var input = process.argv[3];
+var fs = require("fs");
+
+function switchStuff() {
+switch(action) {
+    case "concert-this":
+            if (!input) {
+                input = "The Chainsmokers"
+            }
+        concertThis();
+        break;
+    case "spotify-this":
+            if (!input) {
+                input = "The Sign"
+            }
+        spotifyThis();
+        break;
+    case "movie-this":
+            if (!input) {
+                input = "Mr. Nobody"
+            }
+        movieThis();
+        break;
+    case "do-what-i-say":
+        doWhatISay();
+}
+};
 
 
 function concertThis() {
-    var searCritiria = process.argv[3];
+    var searCritiria = input;
+    
     axios.get('https://rest.bandsintown.com/artists/' + searCritiria + '/events?app_id=codingbootcamp')
         .then(function (response) {
             for (var i = 0; i < response.data.length; i++) {
@@ -20,10 +49,11 @@ function concertThis() {
             console.log(error);
         })
 }
-concertThis();
+
 
 function spotifyThis() {
-    spotify.search({ type: 'track', query: process.argv[3], limit: 1 })
+
+    spotify.search({ type: 'track', query: input, limit: 1 })
         .then(function (response) {
             console.log(JSON.stringify(response.tracks.items[0].artists[0].name, null, 2));
             console.log(JSON.stringify(response.tracks.items[0].preview_url, null, 2));
@@ -36,11 +66,11 @@ function spotifyThis() {
             console.log(err);
         })
 }
-spotifyThis();
+
 
 function movieThis() {
-    var queryUrl = "http://www.omdbapi.com/?t=Spaceballs&y=&plot=short&apikey=trilogy";
-
+    var movieName = input;
+    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     axios.get(queryUrl).then(
         function(response) {
           console.log(response.data.Title);
@@ -69,4 +99,23 @@ function movieThis() {
           console.log(error.config);
         });
     }
-    movieThis();
+
+function doWhatISay(){
+
+
+fs.readFile("random.txt", "utf8", function(error, data) {
+
+  if (error) {
+    return console.log(error);
+  }
+
+
+  var dataArr = data.split(",");
+  input = dataArr[1];
+  action = dataArr[0];
+ switchStuff();
+
+});
+
+}
+switchStuff();
